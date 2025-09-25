@@ -15,22 +15,22 @@ def home_page():
     with Sessesion_obj() as session:
         if (request.method == "POST"):
             action, id_str = tuple(request.form.items())[0]
+            id = str(id_str)
+            fest_obj = session.get(Festival, id)
             if (action == "delete"):
-                id = str(id_str)
-                user_obj = session.get(Festival, id)
-                if (user_obj):
-                    session.delete(user_obj)
+                if (fest_obj):
+                    session.delete(fest_obj)
                     session.commit()
             elif (action == "update"):
-                print("Hello world!")
+                return render_template("update.html", title="Update festivals", memory=fest_obj)
         result = session.query(Festival).all()
-    return render_template("home.html", queries=result)
+    return render_template("home.html", queries=result, title="Festivals")
 
 
 @app.route("/add", methods=["GET", "POST"])
 def add_festival():
     if (request.method == "GET"):
-        return render_template("add.html")
+        return render_template("add.html", title="Add new festival")
     else:
         start_date = date(*from_string(request.form.get("start")))
         end_date = date(*from_string(request.form.get("end")))
@@ -44,7 +44,15 @@ def add_festival():
         with Sessesion_obj() as session:
             session.add(new_record)
             session.commit()
-        return render_template("add.html", flag="Информация успешно добавлена!")
+        return render_template("add.html", flag="Информация успешно добавлена!", title="Add new festival")
+
+
+@app.route("/update", methods = ["POST", "GET"])
+def update_festival():
+    with Sessesion_obj() as session:
+        print(request.form)
+    return "Updating!"
+
 
 
 def main():

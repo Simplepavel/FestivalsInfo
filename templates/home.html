@@ -1,23 +1,16 @@
-<html>
-
-<head>
-    <title>Главная</title>
-</head>
-
-<body>
-    <h1>Главная страница</h1>
+{% extends "layout.html" %}
+{% block content %}
     {% for query in queries %}
     <h2>{{query.name}}</h2>
     <p>{{query.country}}, {{query.city}}</p>
     <p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
-        <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}</p>
+        <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}
+    </p>
     <form action="/" method="post">
-        <button type = "submit" value="{{query.id}}" name = "update">Изменить</button>
-        <button type = "submit" value="{{query.id}}" name = "delete">Удалить</button>
+        <button type="submit" value="{{query.id}}" name="update">Изменить</button>
+        <button type="submit" value="{{query.id}}" name="delete">Удалить</button>
     </form>
     <hr />
     {% endfor %}
     <a href="/add">Добавить информацию+</a>
-</body>
-
-</html>
+{%endblock content%}

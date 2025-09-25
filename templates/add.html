@@ -1,33 +1,26 @@
-<html>
-
-<head>
-    <title>Add New festival</title>
-</head>
-
-<body>
-    <form method="post">
-        {% if flag %}
-        <p>{{ flag }}</p>
+{% extends "layout.html"%}
+{% block content %}
+<form method="post">
+    {% if flag %}
+    <p>{{ flag }}</p>
+    {% endif %}
+    <fieldset>
+        <legend>Добавление информации о фестивали</legend>
+        {% if memory %}
+        <p>Введите название фестиваля: <input name="name" required="required" value="{{memory.name}}" /></p>
+        <p>Введите страну: <input name="country" required="required" value="{{memory.country}}" /></p>
+        <p>Введите город: <input name="city" required="required" value="{{memory.city}}" /></p>
+        <p>Введите дату начала фестиваля: <input name="start" type="date" /></p>
+        <p>Введите дату конца фестиваля: <input name="end" type="date" /></p>
+        {% else %}
+        <p>Введите название фестиваля: <input name="name" required="required" /></p>
+        <p>Введите страну: <input name="country" required="required" /></p>
+        <p>Введите город: <input name="city" required="required" /></p>
+        <p>Введите дату начала фестиваля: <input name="start" type="date" required="required"/></p>
+        <p>Введите дату конца фестиваля: <input name="end" type="date" required="required"/></p>
         {% endif %}
-        <fieldset>
-            <legend>Добавление информации о фестивали</legend>
-            {% if memory %}
-            <p>Введите название фестиваля: <input name="name" required="required" value="{{memory.name}}" /></p>
-            <p>Введите страну: <input name="country" required="required" value="{{memory.country}}" /></p>
-            <p>Введите город: <input name="city" required="required" value="{{memory.city}}" /></p>
-            <p>Введите дату начала фестиваля: <input name="start" type="date" /></p>
-            <p>Введите дату конца фестиваля: <input name="end" type="date" /></p>
-            {% else %}
-            <p>Введите название фестиваля: <input name="name" required="required"/></p>
-            <p>Введите страну: <input name="country" required="required" /></p>
-            <p>Введите город: <input name="city" required="required" /></p>
-            <p>Введите дату начала фестиваля: <input name="start" type="date" /></p>
-            <p>Введите дату конца фестиваля: <input name="end" type="date" /></p>
-            {% endif %}
-            <input value="Добавить+" type="submit" />
-        </fieldset>
-    </form>
-    <a href="/">На Главную</a>
-</body>
-
-</html>
+        <input value="Добавить+" type="submit" />
+    </fieldset>
+</form>
+<a href="/">На Главную</a>
+{% endblock content %}
