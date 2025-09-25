@@ -7,15 +7,23 @@
 <body>
     <form method="post">
         {% if flag %}
-        <p>Информация успешно добавлена!</p>
+        <p>{{ flag }}</p>
         {% endif %}
         <fieldset>
             <legend>Добавление информации о фестивали</legend>
-            <p>Введите название фестиваля: <input name="name" required="required" value = "Name1"/></p>
-            <p>Введите страну: <input name="country" required="required" value  = "Land1"/></p>
-            <p>Введите город: <input name="city" required="required" value = "City1"/></p>
+            {% if memory %}
+            <p>Введите название фестиваля: <input name="name" required="required" value="{{memory.name}}" /></p>
+            <p>Введите страну: <input name="country" required="required" value="{{memory.country}}" /></p>
+            <p>Введите город: <input name="city" required="required" value="{{memory.city}}" /></p>
             <p>Введите дату начала фестиваля: <input name="start" type="date" /></p>
             <p>Введите дату конца фестиваля: <input name="end" type="date" /></p>
+            {% else %}
+            <p>Введите название фестиваля: <input name="name" required="required"/></p>
+            <p>Введите страну: <input name="country" required="required" /></p>
+            <p>Введите город: <input name="city" required="required" /></p>
+            <p>Введите дату начала фестиваля: <input name="start" type="date" /></p>
+            <p>Введите дату конца фестиваля: <input name="end" type="date" /></p>
+            {% endif %}
             <input value="Добавить+" type="submit" />
         </fieldset>
     </form>

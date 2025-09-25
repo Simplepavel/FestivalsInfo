@@ -7,11 +7,13 @@
 <body>
     <h1>Главная страница</h1>
     {% for query in queries %}
+    <h2>{{query.name}}</h2>
     <p>{{query.country}}, {{query.city}}</p>
-    <p>{{query.start}} - {{query.end}}</p>
+    <p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
+        <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}</p>
     <form action="/" method="post">
-        <input type="hidden" value="{{query.id}}" name="id" />
-        <input type="submit" value="Удалить" /> <!--name важен лишь при post запросе-->
+        <button type = "submit" value="{{query.id}}" name = "update">Изменить</button>
+        <button type = "submit" value="{{query.id}}" name = "delete">Удалить</button>
     </form>
     <hr />
     {% endfor %}
