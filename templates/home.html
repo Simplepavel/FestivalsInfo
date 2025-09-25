@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <title>Главная</title>
+</head>
+
+<body>
+    <h1>Главная страница</h1>
+    {% for query in queries %}
+    <p>{{query.country}}, {{query.city}}</p>
+    <p>{{query.start}} - {{query.end}}</p>
+    <form action="/" method="post">
+        <input type="hidden" value="{{query.id}}" name="id" />
+        <input type="submit" value="Удалить" /> <!--name важен лишь при post запросе-->
+    </form>
+    <hr />
+    {% endfor %}
+    <a href="/add">Добавить информацию+</a>
+</body>
+
+</html>

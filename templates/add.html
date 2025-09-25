@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>Add New festival</title>
+</head>
+
+<body>
+    <form method="post">
+        {% if flag %}
+        <p>Информация успешно добавлена!</p>
+        {% endif %}
+        <fieldset>
+            <legend>Добавление информации о фестивали</legend>
+            <p>Введите название фестиваля: <input name="name" required="required" value = "Name1"/></p>
+            <p>Введите страну: <input name="country" required="required" value  = "Land1"/></p>
+            <p>Введите город: <input name="city" required="required" value = "City1"/></p>
+            <p>Введите дату начала фестиваля: <input name="start" type="date" /></p>
+            <p>Введите дату конца фестиваля: <input name="end" type="date" /></p>
+            <input value="Добавить+" type="submit" />
+        </fieldset>
+    </form>
+    <a href="/">На Главную</a>
+</body>
+
+</html>
