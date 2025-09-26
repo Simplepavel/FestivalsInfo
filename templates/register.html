@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<form method="POST">
+    {{form.hidden_tag()}}
+    <fieldset>
+        <legend>Регистрация</legend>
+        <p>{{ form.user_name.label }}: {{ form.user_name() }}</p>
+        {% if form.user_name.errors %}
+        {% for error in form.user_name.errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+        <p>{{ form.email.label }}: {{ form.email() }}</p>
+        {% if form.email.errors %}
+        {% for error in form.email.errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+
+
+        <p>{{ form.password.label }}: {{ form.password() }}</p>
+        {% if form.password.errors %}
+        {% for error in form.password.errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+
+
+        <p>{{ form.confirm_password.label }}: {{ form.confirm_password() }}</p>
+        {% if form.confirm_password.errors %}
+        {% for error in form.confirm_password.errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+        {{ form.submit() }}
+    </fieldset>
+</form>
+<small>Уже есть аккаунт?<a href="{{url_for('login')}}">Войти</a></small>
+{% endblock content %}

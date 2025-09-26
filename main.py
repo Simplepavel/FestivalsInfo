@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, flash, url_for
 from DataBase.engine import create, Sessesion_obj
 from DataBase.model import Festival
+from form import RegistrationForm, LoginForm
 from datetime import date
+
 app = Flask(__name__)
+app.config["SECRET_KEY"] = '24185145a2eeb15bdfd87216873761ba'
 
 
 def from_string(date: str) -> tuple:
@@ -47,12 +50,26 @@ def add_festival():
         return render_template("add.html", flag="Информация успешно добавлена!", title="Add new festival")
 
 
-@app.route("/update", methods = ["POST", "GET"])
+@app.route("/update", methods=["POST", "GET"])
 def update_festival():
     with Sessesion_obj() as session:
         print(request.form)
     return "Updating!"
 
+
+@app.route("/register", methods = ["POST", "GET"])
+def register():
+    reg_form = RegistrationForm()
+    if (request.method == "POST"):
+        result = reg_form.validate()
+        if (result):
+            return redirect(url_for('home_page'))
+    return render_template("register.html", title="Sing Up", form=reg_form)
+
+
+@app.route("/login")
+def login():
+    return render_template("login.html", title="Sing Up")
 
 
 def main():
