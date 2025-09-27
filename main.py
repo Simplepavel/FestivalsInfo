@@ -57,19 +57,26 @@ def update_festival():
     return "Updating!"
 
 
-@app.route("/register", methods = ["POST", "GET"])
+@app.route("/register", methods=["POST", "GET"])
 def register():
     reg_form = RegistrationForm()
     if (request.method == "POST"):
-        result = reg_form.validate()
-        if (result):
+        if (reg_form.validate()):
+            flash(
+                f"Зарегистрирован новый пользователь {reg_form.user_name.data}")
             return redirect(url_for('home_page'))
     return render_template("register.html", title="Sing Up", form=reg_form)
 
 
-@app.route("/login")
+@app.route("/login", methods=["POST", "GET"])
 def login():
-    return render_template("login.html", title="Sing Up")
+    login_form = LoginForm()
+    if (request.method == "POST"):
+        result = login_form.validate()
+        if (result):
+            flash(f"Вы успешно вошли!", "succes")
+            return redirect(url_for("home_page"))
+    return render_template("login.html", title="Sing Up", form=login_form)
 
 
 def main():
