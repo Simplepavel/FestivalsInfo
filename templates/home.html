@@ -5,6 +5,7 @@
 <p>{{query.country}}, {{query.city}}</p>
 <p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
     <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}
+<p>Создано: {{query.user}}</p>
 </p>
 <form method="get">
     <button type="submit" value="{{query.id}}" name="update">Изменить</button>

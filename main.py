@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
-from DataBase.engine import create, Sessesion_obj
-from DataBase.model import Festival
+from DataBase.engine import create, Sessesion_obj, drop
+from DataBase.model import Festival, User
 from form import RegistrationForm, LoginForm, AddFestival
-from datetime import date
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = '24185145a2eeb15bdfd87216873761ba'
@@ -21,8 +20,12 @@ def home():
             return redirect(url_for('delete', id=id))
         return redirect(url_for('update', id=id))
     with Sessesion_obj() as session:
-        result = session.query(Festival).all()
-    return render_template("home.html", queries=result, title="Festivals")
+        result = session.query(Festival, User.username).join(
+            User, Festival.author == User.id)
+        for i in result:
+            print(i.name)
+    return "Hello!"
+    # return render_template("home.html", queries=result, title="Festivals")
 
 
 @app.route("/add", methods=["GET", "POST"])

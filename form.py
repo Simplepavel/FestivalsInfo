@@ -28,7 +28,7 @@ class AddFestival(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     user_name = StringField("Имя пользователя", validators=[
-                            DataRequired(), Length(min=2, max=20)])
+                            DataRequired(), Length(max=20)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Пароль", validators=[
                              DataRequired(), Length(min=5)])
