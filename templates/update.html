@@ -1,6 +1,6 @@
 {% extends "layout.html"%}
 {% block content%}
-<form method="POST" action="{{url_for('update_festival')}}">
+<form method="POST" action="{{url_for('update')}}">
     <fieldset>
         <legend>Редактирование</legend>
         <p>Введите новое название фестиваля: <input name="name" required="required" value="{{memory.name}}" /></p>
@@ -13,5 +13,5 @@
         <input type="submit" value="Изменить" />
     </fieldset>
 </form>
-<a href="{{url_for('home_page')}}">На Главную</a>
+<a href="{{url_for('home')}}">На Главную</a>
 {% endblock content %}

@@ -1,12 +1,9 @@
 {% extends "layout.html"%}
 {% block content %}
 <form method="post">
-    {% if flag %}
-    <p>{{ flag }}</p>
-    {% endif %}
     {{form.hidden_tag()}}
     <fieldset>
-        <legend>Добавление информации о фестивали</legend>
+        <legend>{{flag}}</legend>
         <p>{{form.name.label}}: {{form.name()}}</p>
         {% if form.name.errors %}
         {% for error in form.name.errors%}
@@ -51,5 +48,5 @@
         <p>{{form.submit()}}</p>
     </fieldset>
 </form>
-<a href="{{url_for('home_page')}}">На Главную</a>
+<a href="{{url_for('home')}}">На Главную</a>
 {% endblock content %}
