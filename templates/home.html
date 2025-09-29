@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 {% for query in queries %}
-<h2>{{query.name}}</h2>
-<p>{{query.country}}, {{query.city}}</p>
-<p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
-    <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}
-<p>Создано: {{query.user}}</p>
+<h2>{{query[0].name}}</h2>
+<p>{{query[0].country}}, {{query[0].city}}</p>
+<p><b>Начало</b>:{{query[0].start.strftime("%d.%m.%Y")}} <br />
+    <b>Конец</b>:{{query[0].end.strftime("%d.%m.%Y")}}
+<p>Создано: {{query[1]}}</p>
 </p>
 <form method="get">
-    <button type="submit" value="{{query.id}}" name="update">Изменить</button>
-    <button type="submit" value="{{query.id}}" name="delete">Удалить</button>
+    <button type="submit" value="{{query[0].id}}" name="update">Изменить</button>
+    <button type="submit" value="{{query[0].id}}" name="delete">Удалить</button>
 </form>
 <hr />
 {% endfor %}

@@ -13,7 +13,7 @@ class Festival(Base):
     start = Column("start", DateTime)
     end = Column("end", DateTime)
     author = Column(Integer, ForeignKey("user.id"))
-
+    
     def __repr__(self):
         return f"Name: {self.name}, Country: {self.country}, City: {self.city}, Start: {self.start}, End: {self.end}"
 

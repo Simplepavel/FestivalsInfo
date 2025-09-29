@@ -21,11 +21,8 @@ def home():
         return redirect(url_for('update', id=id))
     with Sessesion_obj() as session:
         result = session.query(Festival, User.username).join(
-            User, Festival.author == User.id)
-        for i in result:
-            print(i.name)
-    return "Hello!"
-    # return render_template("home.html", queries=result, title="Festivals")
+            User, Festival.author == User.id).all()
+    return render_template("home.html", queries=result, title="Festivals")
 
 
 @app.route("/add", methods=["GET", "POST"])
