@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-from DataBase.model import Festival
+from Festival.database.model import Festival
 
 class AddFestival(FlaskForm):
     name = StringField("Название фестиваля", validators=[DataRequired()])

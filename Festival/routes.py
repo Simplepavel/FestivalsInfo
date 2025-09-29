@@ -1,16 +1,8 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
-from DataBase.engine import create, Sessesion_obj, drop
-from DataBase.model import Festival, User
-from form import RegistrationForm, LoginForm, AddFestival
-
-app = Flask(__name__)
-app.config["SECRET_KEY"] = '24185145a2eeb15bdfd87216873761ba'
-
-
-def from_string(date: str) -> tuple:
-    return [int(i) for i in date.split('-')]
-
-
+from flask import render_template, request, redirect, flash, url_for
+from Festival import app
+from Festival.form import RegistrationForm, LoginForm, AddFestival
+from Festival.database.model import Festival, User
+from Festival.database.engine import Session
 @app.route("/", methods=["GET"])
 @app.route("/home")
 def home():
@@ -19,7 +11,7 @@ def home():
         if (action == 'delete'):
             return redirect(url_for('delete', id=id))
         return redirect(url_for('update', id=id))
-    with Sessesion_obj() as session:
+    with Session() as session:
         result = session.query(Festival, User.username).join(
             User, Festival.author == User.id).all()
     return render_template("home.html", queries=result, title="Festivals")
@@ -38,7 +30,7 @@ def add():
             new_record = Festival(name=form_obj.name.data,
                                   country=form_obj.country.data, city=form_obj.city.data,
                                   start=form_obj.start.data, end=form_obj.end.data)
-            with Sessesion_obj() as session:
+            with Session() as session:
                 session.add(new_record)
                 session.commit()
             flash('Информация успешно добавлена!')
@@ -50,11 +42,11 @@ def add():
 def update(id):
     form_obj = AddFestival()
     if (request.method == "GET"):
-        with Sessesion_obj() as session:
+        with Session() as session:
             fest_obj = session.get(Festival, int(id))
             form_obj.fill(fest_obj)
             return render_template("add.html", flag="Редактирование", title="Update Festval", form=form_obj)
-    with Sessesion_obj() as session:
+    with Session() as session:
         fest_obj = session.get(Festival, int(id))
         fest_obj.name = form_obj.name.data
         fest_obj.country = form_obj.country.data
@@ -68,7 +60,7 @@ def update(id):
 
 @app.route("/delete/<int:id>", methods=["GET"])
 def delete(id):
-    with Sessesion_obj() as session:
+    with Session() as session:
         fest_obj = session.get(Festival, int(id))
         session.delete(fest_obj)
         session.commit()
@@ -95,12 +87,3 @@ def login():
             flash(f"Вы успешно вошли!", "succes")
             return redirect(url_for("home"))
     return render_template("login.html", title="Sing Up", form=login_form)
-
-
-def main():
-    create()
-    app.run()
-
-
-if __name__ == "__main__":
-    main()
