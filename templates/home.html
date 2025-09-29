@@ -6,13 +6,13 @@
 <p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
     <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}
 </p>
-<form action="/" method="post">
+<form action="" method="post">
     <button type="submit" value="{{query.id}}" name="update">Изменить</button>
     <button type="submit" value="{{query.id}}" name="delete">Удалить</button>
 </form>
 <hr />
 {% endfor %}
-<a href="/add">Добавить информацию+</a>
-<a href="/register">Регистрация</a>
-<a href="/login">Войти</a>
+<a href="{{url_for('add_festival')}}">Добавить информацию+</a>
+<a href="{{url_for('register')}}">Регистрация</a>
+<a href="{{url_for('login')}}">Войти</a>
 {%endblock content%}

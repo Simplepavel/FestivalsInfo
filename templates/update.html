@@ -1,17 +1,17 @@
 {% extends "layout.html"%}
 {% block content%}
-<form method="POST" action="/update">
+<form method="POST" action="{{url_for('update_festival')}}">
     <fieldset>
         <legend>Редактирование</legend>
         <p>Введите новое название фестиваля: <input name="name" required="required" value="{{memory.name}}" /></p>
         <p>Введите новою страну: <input name="country" required="required" value="{{memory.country}}" /></p>
         <p>Введите новый город: <input name="city" required="required" value="{{memory.city}}" /></p>
         <p>Введите новую дату начала фестиваля: <input name="start" type="date"
-                value="{{ memory.start.strftime('%Y-%m-%d') }}" required="required"/></p>
+                value="{{ memory.start.strftime('%Y-%m-%d') }}" required="required" /></p>
         <p>Введите новую дату конца фестиваля: <input name="end" type="date"
                 value="{{ memory.end.strftime('%Y-%m-%d') }}" required="required" /></p>
         <input type="submit" value="Изменить" />
     </fieldset>
 </form>
-<a href="/">На Главную</a>
+<a href="{{url_for('home_page')}}">На Главную</a>
 {% endblock content %}

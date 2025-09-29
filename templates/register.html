@@ -33,7 +33,9 @@
         {% endfor %}
         {% endif %}
         {{ form.submit() }}
+        <br />
+        <small>Уже есть аккаунт?<a href="{{url_for('login')}}">Войти</a></small>
     </fieldset>
 </form>
-<small>Уже есть аккаунт?<a href="{{url_for('login')}}">Войти</a></small>
+<a href="{{url_for('home_page')}}">На Главную</a>
 {% endblock content %}

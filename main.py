@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
 from DataBase.engine import create, Sessesion_obj
 from DataBase.model import Festival
-from form import RegistrationForm, LoginForm
+from form import RegistrationForm, LoginForm, AddFestival
 from datetime import date
 
 app = Flask(__name__)
@@ -32,22 +32,22 @@ def home_page():
 
 @app.route("/add", methods=["GET", "POST"])
 def add_festival():
-    if (request.method == "GET"):
-        return render_template("add.html", title="Add new festival")
-    else:
-        start_date = date(*from_string(request.form.get("start")))
-        end_date = date(*from_string(request.form.get("end")))
-        new_record = Festival(name=request.form.get("name"), country=request.form.get(
-            "country"), city=request.form.get("city"), start=start_date, end=end_date)
-        if (end_date < start_date):
-            memorization = {"name": request.form.get("name"), "country": request.form.get(
-                "country"), "city": request.form.get("city")}
-            return render_template("add.html", flag="Введите корректные даты! Конец не может быть позже начала", memory=memorization)
-
-        with Sessesion_obj() as session:
-            session.add(new_record)
-            session.commit()
-        return render_template("add.html", flag="Информация успешно добавлена!", title="Add new festival")
+    flag = None
+    form_obj = AddFestival()
+    if (request.method == "POST"):
+        result = form_obj.validate()
+        if result:
+            if (form_obj.end.data < form_obj.start.data):
+                return render_template("add.html", flag="Введите корректные даты! Конец не может быть позже начала", form=form_obj)
+            new_record = Festival(name=form_obj.name.data,
+                                  country=form_obj.country.data, city=form_obj.city.data,
+                                  start=form_obj.start.data, end=form_obj.end.data)
+            with Sessesion_obj() as session:
+                session.add(new_record)
+                session.commit()
+            flag = "Информация успешно добавлена!"
+            form_obj.clear()
+    return render_template("add.html", flag=flag, title="Add new festival", form=form_obj)
 
 
 @app.route("/update", methods=["POST", "GET"])

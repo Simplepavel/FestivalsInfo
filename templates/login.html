@@ -14,11 +14,14 @@
         <p>{{form.password.label()}}: {{form.password()}}</p>
         {% if form.password.errors %}
         {% for error in form.password.errors%}
-        <p color="red">{{error}}</p>
+        <p>{{error}}</p>
         {% endfor %}
         {% endif %}
         <p>{{form.remember.label()}}: {{form.remember()}}</p>
         {{form.submit()}}
+        <br />
+        <a href="{{url_for('register')}}"><small>Регистрация</small></a>
     </fieldset>
 </form>
+<a href="{{url_for('home_page')}}">На Главную</a>
 {% endblock content%}

@@ -4,23 +4,52 @@
     {% if flag %}
     <p>{{ flag }}</p>
     {% endif %}
+    {{form.hidden_tag()}}
     <fieldset>
         <legend>Добавление информации о фестивали</legend>
-        {% if memory %}
-        <p>Введите название фестиваля: <input name="name" required="required" value="{{memory.name}}" /></p>
-        <p>Введите страну: <input name="country" required="required" value="{{memory.country}}" /></p>
-        <p>Введите город: <input name="city" required="required" value="{{memory.city}}" /></p>
-        <p>Введите дату начала фестиваля: <input name="start" type="date" /></p>
-        <p>Введите дату конца фестиваля: <input name="end" type="date" /></p>
-        {% else %}
-        <p>Введите название фестиваля: <input name="name" required="required" /></p>
-        <p>Введите страну: <input name="country" required="required" /></p>
-        <p>Введите город: <input name="city" required="required" /></p>
-        <p>Введите дату начала фестиваля: <input name="start" type="date" required="required"/></p>
-        <p>Введите дату конца фестиваля: <input name="end" type="date" required="required"/></p>
+        <p>{{form.name.label}}: {{form.name()}}</p>
+        {% if form.name.errors %}
+        {% for error in form.name.errors%}
+        <p>error</p>
+        {% endfor %}
         {% endif %}
-        <input value="Добавить+" type="submit" />
+
+
+        <p>{{form.country.label}}: {{form.country()}}</p>
+
+        {% if form.country.errors %}
+        {% for error in form.country.errors%}
+        <p>error</p>
+        {% endfor %}
+        {% endif %}
+
+
+        <p>{{form.city.label}}: {{form.city()}}</p>
+
+        {% if form.city.errors %}
+        {% for error in form.city.errors%}
+        <p>error</p>
+        {% endfor %}
+        {% endif %}
+
+
+        <p>{{form.start.label}}: {{form.start()}}</p>
+
+        {% if form.start.errors %}
+        {% for error in form.start.errors%}
+        <p>error</p>
+        {% endfor %}
+        {% endif %}
+
+        <p>{{form.end.label}}: {{form.end()}}</p>
+
+        {% if form.end.errors %}
+        {% for error in form.end.errors%}
+        <p>error</p>
+        {% endfor %}
+        {% endif %}
+        <p>{{form.submit()}}</p>
     </fieldset>
 </form>
-<a href="/">На Главную</a>
+<a href="{{url_for('home_page')}}">На Главную</a>
 {% endblock content %}
