@@ -1,19 +1,42 @@
 {% extends "layout.html" %}
 {% block content %}
-{% for query in queries %}
-<h2>{{query[0].name}}</h2>
-<p>{{query[0].country}}, {{query[0].city}}</p>
-<p><b>Начало</b>:{{query[0].start.strftime("%d.%m.%Y")}} <br />
-    <b>Конец</b>:{{query[0].end.strftime("%d.%m.%Y")}}
-<p>Создано: {{query[1]}}</p>
+
+
+{% if current_user.is_authenticated%}
+<p>Добро пожаловать, {{current_user.username}}</p>
+<a href="{{url_for('posts_bl.add')}}">Добавить информацию+</a>
+<a href="{{url_for('users_bl.account')}}">Мой аккаунт</a>
+<a href="{{url_for('users_bl.logout')}}">Выйти</a>
+{% else %}
+<a href="{{url_for('users_bl.register')}}">Регистрация</a>
+<a href="{{url_for('users_bl.login')}}">Войти</a>
+{% endif %}
+
+
+{% if queries %}
+{% for query in queries.items %}
+<h2>{{query.author.username}}</h2>
+<p>{{query.country}}, {{query.city}}</p>
+<p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
+    <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}
+<p>Создано: <a href="{{url_for('users_bl.user_account', id = query.author_id)}}">{{query.author.username}}</a></p>
 </p>
-<form method="get">
-    <button type="submit" value="{{query[0].id}}" name="update">Изменить</button>
-    <button type="submit" value="{{query[0].id}}" name="delete">Удалить</button>
-</form>
 <hr />
 {% endfor %}
-<a href="{{url_for('add')}}">Добавить информацию+</a>
-<a href="{{url_for('register')}}">Регистрация</a>
-<a href="{{url_for('login')}}">Войти</a>
+
+{% endif %}
+
+
+{% for query in queries.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 1) %}
+{% if query %}
+{% if query == queries.page%}
+<a href="{{url_for('main_bl.home', page = query)}}" color=""><b>{{query}}</b></a>
+{% else %}
+<a href="{{url_for('main_bl.home', page = query)}}">{{query}}</a>
+{% endif %}
+{% else %}
+...
+{% endif %}
+{% endfor %}
+
 {%endblock content%}

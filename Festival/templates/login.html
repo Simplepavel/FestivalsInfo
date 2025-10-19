@@ -20,8 +20,12 @@
         <p>{{form.remember.label()}}: {{form.remember()}}</p>
         {{form.submit()}}
         <br />
-        <a href="{{url_for('register')}}"><small>Регистрация</small></a>
+        <div>
+            <a href = "{{url_for('users_bl.send_request')}}"><small>Забыли пароль?</small></a>
+        </div>
+        <div>
+            <a href="{{url_for('users_bl.register')}}"><small>Регистрация</small></a>
+        </div>
     </fieldset>
 </form>
-<a href="{{url_for('home')}}">На Главную</a>
 {% endblock content%}

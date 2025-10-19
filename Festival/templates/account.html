@@ -1,0 +1,71 @@
+{% extends "user_account.html"%}
+
+{%block content%}
+<p>Добро пожаловать, {{current_user.username}}!</p>
+<figcaption>
+    <img src="{{image}}" alt="Фото профиля" height="128" width="128" />
+    <br />
+    <caption>Фото профиля</caption>
+</figcaption>
+<form action="" method="post" enctype="multipart/form-data">
+    {{form.hidden_tag()}}
+    <fieldset>
+        <legend>Сведения</legend>
+        <p>{{form.username.label()}}</p>
+        <p>{{form.username()}}</p>
+        {% if form.username.errors %}
+        {% for error in form.username.errors%}
+        <p>{{error}}</p>
+        {%endfor%}
+        {% endif %}
+
+        <p>{{form.email.label()}}</p>
+        <p>{{form.email()}}</p>
+        {% if form.email.errors %}
+        {% for error in form.email.errors%}
+        <p>{{error}}</p>
+        {%endfor%}
+        {% endif %}
+
+        <p>{{form.picture.label()}}</p>
+        <p>{{form.picture()}}</p>
+
+        {% if form.picture.errors %}
+        {% for error in form.picture.errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+
+        <p>{{form.submit()}}</p>
+    </fieldset>
+</form>
+
+
+{% for query in queries.items %}
+<h3>{{query.name}}</h3>
+<p>{{query.country}}, {{query.city}}</p>
+<p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
+    <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}
+</p>
+{% if current_user.id == query.author_id %}
+<a href="{{url_for('posts_bl.update', id = query.id)}}">Изменить</a>
+<a href="{{url_for('posts_bl.delete', id = query.id)}}">Удалить</a>
+{% endif %}
+<hr />
+{% endfor %}
+
+
+
+{% for query in queries.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 1) %}
+{% if query %}
+    {% if query == queries.page%}
+        <a href="{{url_for('users_bl.account', page = query)}}"><b>{{query}}</b></a>
+    {% else %}
+        <a href="{{url_for('users_bl.account', page = query)}}">{{query}}</a>
+    {% endif %}
+{% else %}
+...
+{% endif %}
+{% endfor %}
+
+{%endblock content%}

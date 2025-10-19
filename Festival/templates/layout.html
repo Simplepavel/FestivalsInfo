@@ -3,12 +3,18 @@
 <head>
     <title>{{title}}</title>
 </head>
+
 <body>
+    {% if not a %}
+    <a href="{{url_for('main_bl.home')}}">На главную</a>
+    {% endif %}
     {% with messages = get_flashed_messages()%}
     {% if messages %}
+    <br />
     {% for message in messages%}
     {{message}}
     {% endfor %}
+    <br />
     {% endif %}
     {% endwith %}
     {%block content%}{%endblock content%}

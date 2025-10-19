@@ -1,5 +1,5 @@
-from Festival import app
-from Festival.database.engine import create, drop
+from Festival import app, db
 if __name__ == "__main__":
-    create()
-    app.run()
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True)

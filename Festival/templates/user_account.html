@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<p>Пользователь: {{user.username}}</p>
+<p>Сведения: </p>
+
+<div>
+    <img src="{{path}}" alt="Фото профиля" height="120" weight="160" />
+</div>
+<div>
+    <p>Почта: <a href="mailto:{{user.email}}">{{user.email}}</a></p>
+</div>
+
+
+<h1>Посты Пользователя</h1>
+{% for query in queries.items %}
+<h3>{{query.name}}</h3>
+<p>{{query.country}}, {{query.city}}</p>
+<p><b>Начало</b>:{{query.start.strftime("%d.%m.%Y")}} <br />
+    <b>Конец</b>:{{query.end.strftime("%d.%m.%Y")}}
+</p>
+<hr />
+{% endfor %}
+
+
+
+{% for query in queries.iter_pages(left_edge = 1, right_edge = 1, left_current = 1, right_current = 1) %}
+{% if query %}
+{% if query == queries.page%}
+<a href="{{url_for('users_bl.user_account', id = user.id, page = query)}}"><b>{{query}}</b></a>
+{% else %}
+<a href="{{url_for('users_bl.user_account', id = user.id, page = query)}}">{{query}}</a>
+{% endif %}
+{% else %}
+...
+{% endif %}
+{% endfor %}
+
+{% endblock content %}
